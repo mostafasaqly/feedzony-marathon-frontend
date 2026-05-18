@@ -1,0 +1,94 @@
+<div class="analytics-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">Analytics</h1>
+    <div class="period-selector">
+      @for (p of periods; track p.value) {
+        <button
+          class="period-btn"
+          [class.active]="period === p.value"
+          (click)="setPeriod(p.value)">
+          {{ p.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Error Banner -->
+  @if (error) {
+    <div class="error-banner">
+      <span>{{ error }}</span>
+      <button class="retry-btn" (click)="retry()">Retry</button>
+    </div>
+  }
+
+  <!-- Empty state (no feedback at all) -->
+  @if (!loading && !error && data && data.totalFeedback === 0 && data.totalServices > 0) {
+    <div class="empty-state-full">
+      <div class="empty-icon">📊</div>
+      <h2>No data yet</h2>
+      <p>Share your service links to start collecting feedback.</p>
+      <a routerLink="/dashboard/services" class="btn-primary">Go to Services</a>
+    </div>
+  }
+
+  @if (!error && (loading || data)) {
+    <!-- KPI Row -->
+    <div class="kpi-grid">
+      <app-kpi-card
+        icon="📊"
+        label="Total Feedback"
+        [value]="data?.totalFeedback ?? 0"
+        [loading]="loading">
+      </app-kpi-card>
+      <app-kpi-card
+        icon="⭐"
+        label="Average Rating"
+        [value]="avgRatingDisplay"
+        [loading]="loading">
+      </app-kpi-card>
+      <app-kpi-card
+        icon="📁"
+        label="Total Services"
+        [value]="data?.totalServices ?? 0"
+        [loading]="loading">
+      </app-kpi-card>
+      <app-kpi-card
+        icon="📅"
+        label="This Month"
+        [value]="data?.thisMonth ?? 0"
+        [loading]="loading">
+      </app-kpi-card>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3 class="card-title">Rating Breakdown</h3>
+        <app-rating-distribution-chart
+          [distribution]="data?.ratingDistribution ?? {}"
+          [loading]="loading">
+        </app-rating-distribution-chart>
+      </div>
+      <div class="chart-card">
+        <h3 class="card-title">Feedback Over Time</h3>
+        <app-feedback-over-time-chart
+          [data]="data?.feedbackOverTime ?? []"
+          [period]="period"
+          [loading]="loading">
+        </app-feedback-over-time-chart>
+      </div>
+    </div>
+
+    <!-- Top Services Table -->
+    <div class="table-card">
+      <h3 class="card-title">Top Services</h3>
+      <app-top-services-table
+        [services]="data?.topServices ?? []"
+        [loading]="loading">
+      </app-top-services-table>
+    </div>
+  }
+
+</div>

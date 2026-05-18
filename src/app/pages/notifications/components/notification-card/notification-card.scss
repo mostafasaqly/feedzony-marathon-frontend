@@ -1,0 +1,132 @@
+/* ── Shared ── */
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.card-title {
+  font-size: 0.88rem;
+  color: #334155;
+  &.bold { font-weight: 700; color: #1e293b; }
+}
+
+.card-message {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* ── Compact (dropdown) ── */
+.card.compact {
+  padding: 10px 14px;
+  align-items: center;
+  border-radius: 0;
+
+  &:hover { background: #f5f3ff; }
+  &.unread { background: #faf5ff; }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #cbd5e1;
+  margin-top: 2px;
+
+  &.dot-unread { background: #6366f1; }
+}
+
+.card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-time {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Full (page) ── */
+.card.full {
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 10px;
+  border-left: 4px solid transparent;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  align-items: flex-start;
+  transition: background 0.2s, border-color 0.2s;
+
+  &:hover { background: #faf9ff; }
+
+  &.unread {
+    background: #f5f3ff;
+    border-left-color: #6366f1;
+  }
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  background: #6366f1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.full-message {
+  margin-top: 4px;
+  font-size: 0.85rem;
+}
+
+.card-date {
+  margin-top: 6px;
+  font-size: 0.76rem;
+  color: #94a3b8;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+  min-width: 90px;
+}
+
+.unread-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #6366f1;
+}
+
+.mark-read-btn {
+  display: none;
+  padding: 4px 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #6366f1;
+  background: #ede9fe;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover { background: #ddd6fe; }
+}
+
+.card.full:hover .mark-read-btn { display: block; }

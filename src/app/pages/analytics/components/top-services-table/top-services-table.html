@@ -1,0 +1,46 @@
+@if (loading) {
+  <div class="table-skeleton">
+    @for (i of [1,2,3]; track i) {
+      <div class="skel-row">
+        <div class="skel-cell wide"></div>
+        <div class="skel-cell narrow"></div>
+        <div class="skel-cell narrow"></div>
+        <div class="skel-cell medium"></div>
+      </div>
+    }
+  </div>
+} @else if (services.length === 0) {
+  <div class="empty-state">No services with feedback yet</div>
+} @else {
+  <table class="services-table">
+    <thead>
+      <tr>
+        <th>Service Name</th>
+        <th>Total Feedback</th>
+        <th>Avg Rating</th>
+        <th>Last Feedback</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (svc of displayedServices; track svc.serviceId) {
+        <tr (click)="navigate(svc.serviceId)" class="clickable-row">
+          <td class="service-name">{{ svc.serviceName }}</td>
+          <td>{{ svc.totalFeedback }}</td>
+          <td>
+            @if (svc.averageRating > 0) {
+              <span class="rating-badge">⭐ {{ svc.averageRating.toFixed(1) }}</span>
+            } @else {
+              <span class="no-rating">—</span>
+            }
+          </td>
+          <td class="last-feedback">{{ relativeDate(svc.lastFeedbackAt) }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  @if (hasMore) {
+    <div class="view-all">
+      <span class="muted">Showing top 5</span>
+    </div>
+  }
+}

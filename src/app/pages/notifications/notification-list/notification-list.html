@@ -1,0 +1,64 @@
+<div class="notifications-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">Notifications</h1>
+    @if (unreadCount > 0) {
+      <button class="mark-all-btn" [disabled]="markingAll" (click)="markAllAsRead()">
+        {{ markingAll ? 'Marking…' : 'Mark all as read' }}
+      </button>
+    }
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="filter-tabs">
+    @for (f of filters; track f.value) {
+      <button
+        class="filter-tab"
+        [class.active]="activeFilter === f.value"
+        (click)="setFilter(f.value)">
+        {{ f.label() }}
+      </button>
+    }
+  </div>
+
+  <!-- Error -->
+  @if (error) {
+    <div class="error-banner">
+      <span>{{ error }}</span>
+      <button class="retry-btn" (click)="retry()">Retry</button>
+    </div>
+  }
+
+  <!-- Content -->
+  @if (!error) {
+    @if (loading) {
+      <div class="list">
+        @for (s of skeletons; track s) {
+          <div class="skel-card">
+            <div class="skel-icon"></div>
+            <div class="skel-lines">
+              <div class="skel-line title"></div>
+              <div class="skel-line message"></div>
+              <div class="skel-line date"></div>
+            </div>
+          </div>
+        }
+      </div>
+    } @else if (notifications.length === 0) {
+      <div class="empty-state">{{ emptyMessage }}</div>
+    } @else {
+      <div class="list">
+        @for (n of notifications; track n.id) {
+          <app-notification-card
+            [notification]="n"
+            [compact]="false"
+            (markRead)="onMarkRead($event)"
+            (clicked)="onCardClicked($event)">
+          </app-notification-card>
+        }
+      </div>
+    }
+  }
+
+</div>

@@ -9,6 +9,8 @@ import { CreateService } from './pages/services/create-service/create-service';
 import { EditService } from './pages/services/edit-service/edit-service';
 import { FeedbackList } from './pages/feedback/feedback-list/feedback-list';
 import { PublicFeedback } from './pages/public-feedback/public-feedback';
+import { AnalyticsOverview } from './pages/analytics/analytics-overview/analytics-overview';
+import { ServiceAnalytics } from './pages/analytics/service-analytics/service-analytics';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -25,6 +27,8 @@ export const routes: Routes = [
       { path: 'services/:id/edit', component: EditService },
       { path: 'feedback', component: FeedbackList },
       { path: 'feedback/:serviceId', component: FeedbackList },
+      { path: 'analytics', component: AnalyticsOverview },
+      { path: 'analytics/:serviceId', component: ServiceAnalytics },
     ],
   },
   { path: 'f/:slug', component: PublicFeedback },

@@ -1,0 +1,35 @@
+.chart-wrap {
+  position: relative;
+  height: 200px;
+  width: 100%;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.chart-skeleton {
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px 0;
+
+  .skel-line {
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

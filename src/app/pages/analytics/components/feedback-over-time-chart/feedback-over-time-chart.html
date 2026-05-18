@@ -1,0 +1,15 @@
+@if (loading) {
+  <div class="chart-skeleton">
+    <div class="skel-line"></div>
+  </div>
+} @else if (isEmpty) {
+  <div class="empty-state">No data for this period</div>
+} @else {
+  <div class="chart-wrap">
+    <canvas baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      type="line">
+    </canvas>
+  </div>
+}

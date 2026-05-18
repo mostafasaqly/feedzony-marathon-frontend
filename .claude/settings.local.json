@@ -12,7 +12,11 @@
       "Bash(Select-Object Name)",
       "Bash(npx ng *)",
       "Bash(findstr /r /s \"zoneless\\\\|zone\\\\|provideExperimental\" src\\\\app\\\\app.config.ts package.json angular.json)",
-      "Bash(Select-String -Path \"src\\\\app\\\\app.config.ts\",\"package.json\",\"angular.json\" -Pattern \"zoneless|zone|Experimental\")"
+      "Bash(Select-String -Path \"src\\\\app\\\\app.config.ts\",\"package.json\",\"angular.json\" -Pattern \"zoneless|zone|Experimental\")",
+      "Bash(Get-ChildItem -Path \"d:\\\\Go Code\\\\Marathon Saas Builder\\\\code\\\\feedzony-frontend\" -Recurse -Directory)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)",
+      "Bash(npm install *)"
     ]
   }
 }

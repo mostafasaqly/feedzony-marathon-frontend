@@ -1,0 +1,128 @@
+<div class="analytics-page">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a routerLink="/dashboard/analytics" class="breadcrumb-link">
+      ← Analytics
+    </a>
+    @if (data?.serviceName) {
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">{{ data!.serviceName }}</span>
+    }
+  </div>
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1 class="page-title">
+      @if (loading) { <span class="skel-title"></span> }
+      @else { {{ data?.serviceName ?? 'Service Analytics' }} }
+    </h1>
+    <div class="period-selector">
+      @for (p of periods; track p.value) {
+        <button
+          class="period-btn"
+          [class.active]="period === p.value"
+          (click)="setPeriod(p.value)">
+          {{ p.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- Error Banner -->
+  @if (error) {
+    <div class="error-banner">
+      <span>{{ error }}</span>
+      <button class="retry-btn" (click)="retry()">Retry</button>
+    </div>
+  }
+
+  @if (!error) {
+    <!-- KPI Row -->
+    <div class="kpi-grid">
+      <app-kpi-card
+        icon="📊"
+        label="Total Feedback"
+        [value]="data?.totalFeedback ?? 0"
+        [loading]="loading">
+      </app-kpi-card>
+      <app-kpi-card
+        icon="⭐"
+        label="Average Rating"
+        [value]="avgRatingDisplay"
+        [loading]="loading">
+      </app-kpi-card>
+      <app-kpi-card
+        icon="📅"
+        label="This Month"
+        [value]="data?.thisMonth ?? 0"
+        [loading]="loading">
+      </app-kpi-card>
+      <app-kpi-card
+        icon="🔗"
+        label="Service Slug"
+        [value]="data?.serviceId ? serviceId.slice(-8) : '—'"
+        [loading]="loading">
+      </app-kpi-card>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3 class="card-title">Rating Breakdown</h3>
+        <app-rating-distribution-chart
+          [distribution]="data?.ratingDistribution ?? {}"
+          [loading]="loading">
+        </app-rating-distribution-chart>
+      </div>
+      <div class="chart-card">
+        <h3 class="card-title">Feedback Over Time</h3>
+        <app-feedback-over-time-chart
+          [data]="data?.feedbackOverTime ?? []"
+          [period]="period"
+          [loading]="loading">
+        </app-feedback-over-time-chart>
+      </div>
+    </div>
+
+    <!-- Recent Feedback -->
+    <div class="feedback-card">
+      <h3 class="card-title">Recent Feedback</h3>
+
+      @if (loading) {
+        <div class="feedback-skeleton">
+          @for (i of [1,2,3]; track i) {
+            <div class="skel-feedback-row">
+              <div class="skel-stars"></div>
+              <div class="skel-comment"></div>
+            </div>
+          }
+        </div>
+      } @else if (!data || data.recentFeedback.length === 0) {
+        <div class="no-feedback">No feedback yet</div>
+      } @else {
+        <ul class="feedback-list">
+          @for (fb of data.recentFeedback.slice(0, 5); track fb.id) {
+            <li class="feedback-item">
+              <div class="feedback-meta">
+                <app-star-rating [rating]="fb.rating" [readonly]="true" size="sm"></app-star-rating>
+                <span class="feedback-date">{{ relativeDate(fb.createdAt) }}</span>
+              </div>
+              @if (fb.comment) {
+                <p class="feedback-comment">{{ fb.comment }}</p>
+              } @else {
+                <p class="feedback-comment no-comment">No comment</p>
+              }
+            </li>
+          }
+        </ul>
+        <div class="view-all-link">
+          <a [routerLink]="['/dashboard/feedback', serviceId]" class="link">
+            View all feedback →
+          </a>
+        </div>
+      }
+    </div>
+  }
+
+</div>
