@@ -1,0 +1,144 @@
+<div class="public-wrapper">
+
+  <!-- Loading -->
+  @if (view === 'loading') {
+    <div class="pub-loading">
+      <div class="spinner"></div>
+      <span>Loading…</span>
+    </div>
+  }
+
+  <!-- 404 -->
+  @if (view === 'not-found') {
+    <div class="pub-header">
+      <div class="pub-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z" fill="white"/>
+          </svg>
+        </div>
+        <span>FeedZony</span>
+      </div>
+    </div>
+    <div class="pub-card pub-404">
+      <div class="not-found-icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <h1>Link Not Found</h1>
+      <p>This feedback link is not valid or has been removed.</p>
+    </div>
+  }
+
+  <!-- Form view -->
+  @if (view === 'form' && service) {
+    <div class="pub-header">
+      <div class="pub-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z" fill="white"/>
+          </svg>
+        </div>
+        <span>FeedZony</span>
+      </div>
+    </div>
+
+    <div class="pub-card">
+      <h1>Leave feedback for <span>{{ service.name }}</span></h1>
+      @if (service.description) {
+        <p class="pub-desc">{{ service.description }}</p>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <!-- Star rating -->
+        <div class="form-field">
+          <label class="field-label">Your Rating <span class="required">*</span></label>
+          <app-star-rating
+            size="lg"
+            [rating]="selectedRating"
+            [readonly]="false"
+            (ratingChange)="onRatingChange($event)">
+          </app-star-rating>
+          @if (form.get('rating')?.touched && selectedRating === 0) {
+            <span class="field-error">Please select a rating.</span>
+          }
+        </div>
+
+        <!-- Comment -->
+        <div class="form-field">
+          <label class="field-label" for="comment">
+            Comment
+            <span class="char-count">{{ commentLength }}/500</span>
+          </label>
+          <textarea
+            id="comment"
+            formControlName="comment"
+            rows="4"
+            placeholder="Tell us about your experience…">
+          </textarea>
+          @if (form.get('comment')?.errors?.['maxlength']) {
+            <span class="field-error">Comment cannot exceed 500 characters.</span>
+          }
+        </div>
+
+        @if (submitError) {
+          <div class="submit-error">{{ submitError }}</div>
+        }
+
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="submitting || selectedRating === 0">
+          @if (submitting) {
+            <div class="btn-spinner"></div>
+            Submitting…
+          } @else {
+            Submit Feedback
+          }
+        </button>
+
+      </form>
+    </div>
+  }
+
+  <!-- Success view -->
+  @if (view === 'success') {
+    <div class="pub-header">
+      <div class="pub-brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z" fill="white"/>
+          </svg>
+        </div>
+        <span>FeedZony</span>
+      </div>
+    </div>
+
+    <div class="pub-card pub-success">
+      <div class="success-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h1>Thank you for your feedback!</h1>
+      <p>Your response has been recorded. We really appreciate you taking the time.</p>
+
+      <div class="success-stars">
+        <app-star-rating
+          size="md"
+          [rating]="submittedRating"
+          [readonly]="true">
+        </app-star-rating>
+      </div>
+
+      <button type="button" class="btn-another" (click)="resetForm()">
+        Submit another response
+      </button>
+    </div>
+  }
+
+</div>

@@ -1,0 +1,26 @@
+<div class="star-rating" [class]="'star-rating--' + size" [class.star-rating--readonly]="readonly">
+  <div class="stars">
+    @for (star of stars; track star) {
+      <button
+        type="button"
+        class="star"
+        [class.star--filled]="star <= activeRating"
+        [disabled]="readonly"
+        (mouseenter)="onHover(star)"
+        (mouseleave)="onLeave()"
+        (click)="onSelect(star)"
+        [attr.aria-label]="'Rate ' + star + ' out of 5'">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6L12 2z"
+            [attr.fill]="star <= activeRating ? 'currentColor' : 'none'"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linejoin="round"/>
+        </svg>
+      </button>
+    }
+  </div>
+  @if (!readonly && rating > 0) {
+    <span class="star-label">{{ label }}</span>
+  }
+</div>

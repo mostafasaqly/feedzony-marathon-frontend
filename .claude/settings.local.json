@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\Go Code\\\\Marathon Saas Builder\\\\code\\\\feedzony-frontend\" -Force)",
+      "Bash(ls -la \"d:\\\\\\\\Go Code\\\\\\\\Marathon Saas Builder\\\\\\\\code\\\\\\\\feedzony-frontend\")",
+      "Bash(find \"d:\\\\\\\\Go Code\\\\\\\\Marathon Saas Builder\\\\\\\\code\\\\\\\\feedzony-frontend\\\\\\\\src\" -type f \\\\\\( -name \"*login*\" -o -name \"*auth*\" -o -name \"*.component.ts\" \\\\\\))",
+      "Bash(find \"d:\\\\\\\\Go Code\\\\\\\\Marathon Saas Builder\\\\\\\\code\\\\\\\\feedzony-frontend\\\\\\\\src\" -type d)",
+      "Bash(find \"d:\\\\\\\\Go Code\\\\\\\\Marathon Saas Builder\\\\\\\\code\\\\\\\\feedzony-frontend\" -maxdepth 2 -name \"*.config.*\" -o -name \"tailwind*\" -o -name \"styles*\")",
+      "Bash(find \"d:\\\\\\\\Go Code\\\\\\\\Marathon Saas Builder\\\\\\\\code\\\\\\\\feedzony-frontend\" -maxdepth 1 \\\\\\( -name \"tailwind*\" -o -name \"vite*\" -o -name \"angular.json\" \\\\\\))",
+      "Bash(find \"d:\\\\\\\\Go Code\\\\\\\\Marathon Saas Builder\\\\\\\\code\\\\\\\\feedzony-frontend\\\\\\\\src\\\\\\\\app\\\\\\\\pages\\\\\\\\register\" -type f)",
+      "Bash(Get-ChildItem -Path \"d:\\\\Go Code\\\\Marathon Saas Builder\\\\code\\\\feedzony-frontend\" -ErrorAction SilentlyContinue)",
+      "Bash(Select-Object Name)",
+      "Bash(npx ng *)",
+      "Bash(findstr /r /s \"zoneless\\\\|zone\\\\|provideExperimental\" src\\\\app\\\\app.config.ts package.json angular.json)",
+      "Bash(Select-String -Path \"src\\\\app\\\\app.config.ts\",\"package.json\",\"angular.json\" -Pattern \"zoneless|zone|Experimental\")"
+    ]
+  }
+}
