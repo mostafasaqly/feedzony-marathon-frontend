@@ -1,0 +1,52 @@
+<div class="plan-card" [class.pro]="isPro" [class.current]="isCurrentPlan">
+
+  @if (isPro) {
+    <span class="popular-badge">Most Popular</span>
+  }
+
+  <div class="plan-head">
+    <h3 class="plan-name">{{ plan.name }}</h3>
+    <div class="plan-price">
+      @if (showStrikethrough) {
+        <span class="price-old">${{ plan.price }}</span>
+      }
+      <span class="price-amount">${{ displayPrice }}</span>
+      <span class="price-period">/ month</span>
+    </div>
+    @if (showStrikethrough) {
+      <span class="price-save">Billed yearly · Save 20%</span>
+    }
+  </div>
+
+  <ul class="feature-list">
+    <li class="feature on">
+      <span class="check">✅</span> {{ servicesText }}
+    </li>
+    <li class="feature on">
+      <span class="check">✅</span> {{ feedbackText }}
+    </li>
+    <li class="feature" [class.on]="plan.hasAnalytics" [class.off]="!plan.hasAnalytics">
+      <span class="check">{{ plan.hasAnalytics ? '✅' : '❌' }}</span>
+      {{ plan.hasAnalytics ? 'Full Analytics' : 'Analytics' }}
+    </li>
+    <li class="feature" [class.on]="plan.hasNotifications" [class.off]="!plan.hasNotifications">
+      <span class="check">{{ plan.hasNotifications ? '✅' : '❌' }}</span>
+      Notifications
+    </li>
+    <li class="feature on">
+      <span class="check">✅</span> Public feedback link
+    </li>
+    <li class="feature on">
+      <span class="check">✅</span> Basic dashboard
+    </li>
+  </ul>
+
+  <button
+    type="button"
+    class="plan-cta"
+    [class]="ctaClass"
+    [disabled]="isCurrentPlan"
+    (click)="onSelect()">
+    {{ ctaLabel }}
+  </button>
+</div>

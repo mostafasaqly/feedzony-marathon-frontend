@@ -1,0 +1,132 @@
+<div class="page">
+
+  <div class="page-header">
+    <div>
+      <h1>Billing</h1>
+      <p>Manage your plan, track usage, and review billing history.</p>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <span>Loading billing information…</span>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (!loading && error) {
+    <div class="error-banner">
+      {{ error }}
+      <button class="retry-btn" (click)="load()">Retry</button>
+    </div>
+  }
+
+  @if (!loading && !error && usage) {
+
+    <!-- Success message -->
+    @if (successMessage) {
+      <div class="success-banner">{{ successMessage }}</div>
+    }
+
+    <!-- 1. Current Plan card -->
+    <div class="card plan-card-row">
+      <div class="plan-left">
+        @if (isPro) {
+          <span class="plan-badge pro">PRO ✨</span>
+        } @else {
+          <span class="plan-badge free">FREE</span>
+        }
+        <div class="plan-info">
+          <span class="plan-status">Active ✅</span>
+          <p class="plan-desc">{{ planDescription }}</p>
+        </div>
+      </div>
+      <div class="plan-right">
+        @if (isPro) {
+          <button type="button" class="btn-outline" (click)="goToPlans()">Change Plan</button>
+        } @else {
+          <button type="button" class="btn-primary" (click)="openUpgradeModal()">
+            Upgrade to Pro
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- 2. Usage section -->
+    <div class="card">
+      <h2 class="card-title">Your Usage This Month</h2>
+
+      @if (nearLimit) {
+        <div class="warning-banner">
+          ⚠️ You're approaching your plan limit. Consider upgrading.
+        </div>
+      }
+
+      <app-usage-bar
+        label="Services"
+        [used]="usage.usage.servicesUsed"
+        [limit]="usage.usage.servicesLimit" />
+      <app-usage-bar
+        label="Feedback this month"
+        [used]="usage.usage.feedbackThisMonth"
+        [limit]="usage.usage.feedbackLimit" />
+    </div>
+
+    <!-- 3. Plan comparison table -->
+    <div class="card">
+      <h2 class="card-title">Plan Features</h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Pro</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Services</td>
+            <td class="muted">1</td>
+            <td class="indigo">Unlimited</td>
+          </tr>
+          <tr>
+            <td>Feedback / month</td>
+            <td class="muted">50</td>
+            <td class="indigo">Unlimited</td>
+          </tr>
+          <tr>
+            <td>Analytics</td>
+            <td class="off">❌</td>
+            <td class="on">✅</td>
+          </tr>
+          <tr>
+            <td>Notifications</td>
+            <td class="off">❌</td>
+            <td class="on">✅</td>
+          </tr>
+          <tr>
+            <td>Support</td>
+            <td class="muted">Community</td>
+            <td class="indigo">Priority</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 4. Billing History -->
+    <div class="card">
+      <h2 class="card-title">Billing History</h2>
+      <div class="history-empty">
+        💳 Billing history will appear here after your first payment.
+      </div>
+    </div>
+
+  }
+</div>
+
+<app-upgrade-modal
+  [isOpen]="showUpgradeModal"
+  (closed)="closeUpgradeModal()"
+  (confirmed)="onUpgradeConfirmed()" />

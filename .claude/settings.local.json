@@ -16,7 +16,10 @@
       "Bash(Get-ChildItem -Path \"d:\\\\Go Code\\\\Marathon Saas Builder\\\\code\\\\feedzony-frontend\" -Recurse -Directory)",
       "Bash(Select-Object -ExpandProperty FullName)",
       "Bash(Sort-Object)",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "PowerShell(Write-Output \"PWD: $\\(Get-Location\\)\"; Get-ChildItem \"src\\\\app\\\\pages\\\\billing\" -Recurse -File | Select-Object -ExpandProperty FullName)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"src\\\\app\\\\pages\\\\billing\\\\components\\\\usage-bar\" | Out-Null; \"billing.model exists: $\\(Test-Path 'src\\\\app\\\\core\\\\models\\\\billing.model.ts'\\)\"; \"billing.service exists: $\\(Test-Path 'src\\\\app\\\\core\\\\services\\\\billing.service.ts'\\)\"; \"usage-bar dir exists: $\\(Test-Path 'src\\\\app\\\\pages\\\\billing\\\\components\\\\usage-bar'\\)\"; \"plan-card.ts exists: $\\(Test-Path 'src\\\\app\\\\pages\\\\billing\\\\components\\\\plan-card\\\\plan-card.ts'\\)\")",
+      "PowerShell(npm run build 2>&1)"
     ]
   }
 }

@@ -41,6 +41,8 @@
   transition: background 0.15s, box-shadow 0.15s;
 
   &:hover { background: var(--color-primary-hover); box-shadow: 0 4px 14px rgba(109,40,217,0.22); text-decoration: none; }
+  &.btn-disabled { background: #e5e7eb; color: #9ca3af; }
+  &.btn-disabled:hover { background: #e5e7eb; box-shadow: none; }
 }
 
 /* Loading */

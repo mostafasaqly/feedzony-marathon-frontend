@@ -11,11 +11,14 @@ import { FeedbackList } from './pages/feedback/feedback-list/feedback-list';
 import { PublicFeedback } from './pages/public-feedback/public-feedback';
 import { AnalyticsOverview } from './pages/analytics/analytics-overview/analytics-overview';
 import { ServiceAnalytics } from './pages/analytics/service-analytics/service-analytics';
+import { PlansPage } from './pages/billing/plans-page/plans-page';
+import { BillingDashboard } from './pages/billing/billing-dashboard/billing-dashboard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'register', component: Register },
   { path: 'login', component: Login },
+  { path: 'plans', component: PlansPage },
   {
     path: 'dashboard',
     component: DashboardShell,
@@ -29,6 +32,8 @@ export const routes: Routes = [
       { path: 'feedback/:serviceId', component: FeedbackList },
       { path: 'analytics', component: AnalyticsOverview },
       { path: 'analytics/:serviceId', component: ServiceAnalytics },
+      { path: 'billing', component: BillingDashboard },
+      { path: 'billing/plans', component: PlansPage },
     ],
   },
   { path: 'f/:slug', component: PublicFeedback },

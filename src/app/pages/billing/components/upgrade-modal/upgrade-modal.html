@@ -1,0 +1,60 @@
+@if (isOpen) {
+  <div class="modal-overlay" (click)="onClose()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <button type="button" class="modal-close" (click)="onClose()" [disabled]="loading" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <h2 class="modal-title">Upgrade to Pro 🚀</h2>
+
+      <!-- Summary -->
+      <div class="summary">
+        <div class="summary-row">
+          <span class="summary-label">Plan</span>
+          <span class="summary-value">Pro Monthly</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Price</span>
+          <span class="summary-value">${{ proPrice }}.00 / month</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Next billing</span>
+          <span class="summary-value">{{ nextBillingDate }}</span>
+        </div>
+      </div>
+
+      <!-- Payment placeholder -->
+      <div class="payment-section">
+        <label class="payment-label">Payment Method</label>
+        <div class="card-field">
+          <input type="text" placeholder="Card number" disabled />
+        </div>
+        <div class="card-row">
+          <input type="text" placeholder="MM / YY" disabled />
+          <input type="text" placeholder="CVC" disabled />
+        </div>
+        <p class="payment-note">🔒 Stripe integration coming soon</p>
+      </div>
+
+      @if (error) {
+        <div class="modal-error">{{ error }}</div>
+      }
+
+      <!-- Actions -->
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="onClose()" [disabled]="loading">
+          Cancel
+        </button>
+        <button type="button" class="btn-confirm" (click)="confirm()" [disabled]="loading">
+          @if (loading) {
+            <span class="btn-spinner"></span> Processing…
+          } @else {
+            Confirm & Pay ${{ proPrice }}.00
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}

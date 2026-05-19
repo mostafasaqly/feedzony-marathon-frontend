@@ -1,0 +1,60 @@
+<div class="plans-page">
+  <div class="plans-inner">
+
+    <header class="plans-header">
+      <h1>Choose Your Plan</h1>
+      <p>Start free, upgrade when you grow. No hidden fees, cancel anytime.</p>
+    </header>
+
+    <!-- Billing cycle toggle -->
+    <div class="cycle-toggle">
+      <button
+        type="button"
+        [class.active]="billingCycle === 'monthly'"
+        (click)="setCycle('monthly')">
+        Monthly
+      </button>
+      <button
+        type="button"
+        [class.active]="billingCycle === 'yearly'"
+        (click)="setCycle('yearly')">
+        Yearly <span class="save-pill">Save 20%</span>
+      </button>
+    </div>
+
+    <!-- Loading -->
+    @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span>Loading plans…</span>
+      </div>
+    }
+
+    <!-- Error -->
+    @if (!loading && error) {
+      <div class="error-banner">
+        {{ error }}
+        <button class="retry-btn" (click)="load()">Retry</button>
+      </div>
+    }
+
+    <!-- Plans grid -->
+    @if (!loading && !error) {
+      <div class="plans-grid">
+        @for (plan of plans; track plan.id) {
+          <app-plan-card
+            [plan]="plan"
+            [billingCycle]="billingCycle"
+            [isCurrentPlan]="isCurrent(plan)"
+            (selectPlan)="onSelectPlan($event)" />
+        }
+      </div>
+    }
+
+  </div>
+</div>
+
+<app-upgrade-modal
+  [isOpen]="showUpgradeModal"
+  (closed)="closeUpgradeModal()"
+  (confirmed)="onUpgradeConfirmed()" />

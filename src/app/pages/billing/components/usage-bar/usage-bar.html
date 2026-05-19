@@ -1,0 +1,25 @@
+@if (loading) {
+  <div class="usage-bar">
+    <div class="usage-label skeleton-text"></div>
+    <div class="bar-track">
+      <div class="bar-skeleton"></div>
+    </div>
+  </div>
+} @else {
+  <div class="usage-bar">
+    <div class="usage-label">
+      <span class="label-name">{{ label }}</span>
+      <span class="label-count">{{ used }} / {{ limitText }}</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" [class]="colorClass" [style.width.%]="percent">
+        @if (isUnlimited) {
+          <span class="bar-inline-text">Unlimited</span>
+        }
+      </div>
+    </div>
+    @if (overLimit) {
+      <span class="over-note">Over limit by {{ used - limit }}</span>
+    }
+  </div>
+}

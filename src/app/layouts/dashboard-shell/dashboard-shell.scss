@@ -131,10 +131,50 @@
     border-radius: 8px;
     margin: 1px 10px;
     transition: background 0.15s, color 0.15s;
+    cursor: pointer;
 
-    &:hover { background: #f5f3ff; color: var(--color-primary); }
+    &:hover { background: #f5f3ff; color: var(--color-primary); text-decoration: none; }
     &.active { background: #ede9fe; color: var(--color-primary); }
   }
+}
+
+.nav-locked .lock-icon {
+  margin-left: auto;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Plan chip in sidebar footer */
+.plan-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 10px 8px;
+  padding: 9px 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.chip {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 6px;
+
+  &.free { background: #f3f4f6; color: #4b5563; }
+  &.pro  { background: #ede9fe; color: var(--color-primary); }
+}
+
+.chip-upgrade {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
 }
 
 .nav-icon {
